@@ -1,0 +1,15 @@
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/authController');
+const authMiddleware = require('../middlewares/authMiddleware');
+
+// Public routes
+router.post('/registration', authController.register);
+router.post('/login', authController.login);
+
+// Protected routes (require authentication)
+router.get('/profile', authMiddleware, authController.getProfile);
+router.put('/profile/update', authMiddleware, authController.updateProfile);
+router.put('/profile/image', authMiddleware, authController.updateProfileImage);
+
+module.exports = router;

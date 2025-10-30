@@ -1,11 +1,41 @@
 const pool = require('../config/db');
 
 class TransactionRepository {
-  // Generate unique invoice number
-  generateInvoiceNumber() {
-    const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `INV${timestamp}${random}`;
+  // Generate unique invoice number with format INVDDMMYYYY-{running_number}
+  async generateInvoiceNumber() {
+    const today = new Date();
+    const day = today.getDate().toString().padStart(2, '0');
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const year = today.getFullYear();
+    const datePrefix = `INV${day}${month}${year}`;
+    
+    // Get the latest invoice number for today
+    const query = `
+      SELECT invoice_number 
+      FROM transactions 
+      WHERE invoice_number LIKE $1 
+      ORDER BY id DESC 
+      LIMIT 1
+    `;
+    
+    try {
+      const result = await pool.query(query, [`${datePrefix}-%`]);
+      
+      let nextNumber = 1;
+      if (result.rows.length > 0) {
+        const lastInvoice = result.rows[0].invoice_number;
+        // Extract the running number from format INVDDMMYYYY-{number}
+        const lastNumber = parseInt(lastInvoice.split('-')[1]) || 0;
+        nextNumber = lastNumber + 1;
+      }
+      
+      return `${datePrefix}-${nextNumber.toString().padStart(3, '0')}`;
+    } catch (error) {
+      console.error('Error generating invoice number:', error);
+      // Fallback to timestamp-based if query fails
+      const fallback = Date.now().toString().slice(-6);
+      return `${datePrefix}-${fallback}`;
+    }
   }
   
   // Create top-up transaction
@@ -15,7 +45,7 @@ class TransactionRepository {
     try {
       await client.query('BEGIN');
       
-      const invoiceNumber = this.generateInvoiceNumber();
+      const invoiceNumber = await this.generateInvoiceNumber();
       
       // Insert transaction record
       const transactionQuery = `
@@ -87,7 +117,7 @@ class TransactionRepository {
         throw new Error('Insufficient balance');
       }
       
-      const invoiceNumber = this.generateInvoiceNumber();
+      const invoiceNumber = await this.generateInvoiceNumber();
       
       // Insert transaction record
       const transactionQuery = `

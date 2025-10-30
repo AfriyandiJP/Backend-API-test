@@ -14,7 +14,8 @@ class TransactionController {
       if (!wallet) {
         return res.status(404).json({
           status: 404,
-          message: 'Wallet not found'
+          message: 'Wallet tidak ditemukan',
+          data: null
         });
       }
       
@@ -30,7 +31,8 @@ class TransactionController {
       console.error('Get balance error:', error);
       res.status(500).json({
         status: 500,
-        message: 'Internal server error'
+        message: 'Internal server error',
+        data: null
       });
     }
   }
@@ -43,8 +45,9 @@ class TransactionController {
       
       if (error) {
         return res.status(400).json({
-          status: 400,
-          message: error.details[0].message
+          status: 102,
+          message: error.details[0].message,
+          data: null
         });
       }
       
@@ -72,13 +75,15 @@ class TransactionController {
       if (error.message === 'Wallet not found') {
         return res.status(404).json({
           status: 404,
-          message: 'Wallet tidak ditemukan'
+          message: 'Wallet tidak ditemukan',
+          data: null
         });
       }
       
       res.status(500).json({
         status: 500,
-        message: 'Internal server error'
+        message: 'Internal server error',
+        data: null
       });
     }
   }
@@ -104,8 +109,9 @@ class TransactionController {
       
       if (!service) {
         return res.status(400).json({
-          status: 400,
-          message: 'Service atau Layanan tidak ditemukan'
+          status: 102,
+          message: 'Service atau Layanan tidak ditemukan',
+          data: null
         });
       }
       
@@ -137,8 +143,9 @@ class TransactionController {
       
       if (error.message === 'Insufficient balance') {
         return res.status(400).json({
-          status: 400,
-          message: 'Balance tidak mencukupi'
+          status: 102,
+          message: 'Balance tidak mencukupi',
+          data: null
         });
       }
       

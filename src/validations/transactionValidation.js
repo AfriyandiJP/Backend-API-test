@@ -9,12 +9,12 @@ const topUpSchema = Joi.object({
     .max(10000000) // Maximum top-up 10,000,000
     .required()
     .messages({
-      'number.base': 'Top up amount must be a number',
-      'number.integer': 'Top up amount must be an integer',
-      'number.positive': 'Top up amount must be positive',
-      'number.min': 'Minimum top up amount is 10,000',
-      'number.max': 'Maximum top up amount is 10,000,000',
-      'any.required': 'Top up amount is required'
+      'number.base': 'Paramter amount hanya boleh angka dan tidak boleh lebih kecil dari 0',
+      'number.integer': 'Paramter amount hanya boleh angka dan tidak boleh lebih kecil dari 0',
+      'number.positive': 'Paramter amount hanya boleh angka dan tidak boleh lebih kecil dari 0',
+      'number.min': 'Minimum jumlah top up adalah 10,000',
+      'number.max': 'Maximum jumlah top up adalah 10,000,000',
+      'any.required': 'Jumlah top up harus diisi'
     })
 });
 
@@ -23,8 +23,8 @@ const transactionSchema = Joi.object({
   service_code: Joi.string()
     .required()
     .messages({
-      'string.base': 'Service code must be a string',
-      'any.required': 'Service code is required'
+      'string.base': 'Kode layanan harus berupa string',
+      'any.required': 'Kode layanan harus diisi'
     })
 });
 
@@ -35,9 +35,9 @@ const transactionHistorySchema = Joi.object({
     .min(0)
     .default(0)
     .messages({
-      'number.base': 'Offset must be a number',
-      'number.integer': 'Offset must be an integer',
-      'number.min': 'Offset must be non-negative'
+      'number.base': 'Offset harus berupa angka',
+      'number.integer': 'Offset harus berupa angka',
+      'number.min': 'Offset harus lebih dari 0'
     }),
   limit: Joi.number()
     .integer()
@@ -45,10 +45,10 @@ const transactionHistorySchema = Joi.object({
     .max(100)
     .default(10)
     .messages({
-      'number.base': 'Limit must be a number',
-      'number.integer': 'Limit must be an integer',
-      'number.min': 'Limit must be at least 1',
-      'number.max': 'Limit must not exceed 100'
+      'number.base': 'Limit harus berupa angka',
+      'number.integer': 'Limit harus berupa angka',
+      'number.min': 'Limit harus lebih dari 1',
+      'number.max': 'Limit harus kurang dari 100'
     })
 });
 

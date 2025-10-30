@@ -206,26 +206,38 @@ class AuthController {
   
   // Update profile image endpoint
   async updateProfileImage(req, res) {
-    console.log('updateProfileImage', req);
-    console.log('updateProfileImage', req.body);
+    console.log('updateProfileImage', req.file);
     try {
       // For now, we'll implement a simple base64 image handler
       // In production, you might want to use multer for file uploads
-      const { profile_image } = req.body;
+      const file = req.file;
+      const originalname = req.file.originalname;
+
+
       
-      if (!profile_image) {
+      if (!file) {
         return res.status(400).json({
           status: 102,
           message: 'Profile image tidak boleh kosong',
           data: null
         });
       }
+
+      const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+      if(!allowedMimeTypes.includes(file.mimetype)){
+        return res.status(400).json({
+          status: 102,
+          message: 'Format Image tidak sesuai',
+          data: null
+        });
+      }
       
-      
+
       const userId = req.user.id;
       
       // Update profile image
-      const updatedUser = await userRepository.updateProfileImage(userId, profile_image);
+      const updatedUser = await userRepository.updateProfileImage(userId, originalname);
       
       if (!updatedUser) {
         return res.status(404).json({

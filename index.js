@@ -43,14 +43,9 @@ app.use('/api/v1', authRoutes);
 app.use('/api/v1', referenceRoutes);
 app.use('/api/v1', transactionRoutes);
 
-// Error handling middleware (will be implemented in Phase 4)
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    status: 500,
-    message: 'Internal server error'
-  });
-});
+// Error handling middleware
+const errorMiddleware = require('./src/middlewares/errorMiddleware');
+app.use(errorMiddleware);
 
 // 404 handler
 app.use((req, res) => {

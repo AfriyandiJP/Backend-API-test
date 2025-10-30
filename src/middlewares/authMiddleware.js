@@ -8,8 +8,9 @@ const authMiddleware = async (req, res, next) => {
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({
-        status: 401,
-        message: 'Token tidak valid atau kadaluwarsa'
+        status: 108,
+        message: 'Token tidak valid atau kadaluwarsa',
+        data: null
       });
     }
     
@@ -18,8 +19,9 @@ const authMiddleware = async (req, res, next) => {
     
     if (!token) {
       return res.status(401).json({
-        status: 401,
-        message: 'Token tidak valid atau kadaluwarsa'
+        status: 108,
+        message: 'Token tidak valid atau kadaluwarsa',
+        data: null
       });
     }
     
@@ -31,8 +33,9 @@ const authMiddleware = async (req, res, next) => {
     
     if (!user) {
       return res.status(401).json({
-        status: 401,
-        message: 'Token tidak valid atau kadaluwarsa'
+        status: 108,
+        message: 'Token tidak valid atau kadaluwarsa',
+        data: null
       });
     }
     
@@ -45,14 +48,16 @@ const authMiddleware = async (req, res, next) => {
     
     if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
       return res.status(401).json({
-        status: 401,
-        message: 'Token tidak valid atau kadaluwarsa'
+        status: 108,
+        message: 'Token tidak valid atau kadaluwarsa',
+        data: null
       });
     }
     
     return res.status(500).json({
       status: 500,
-      message: 'Internal server error'
+      message: 'Internal server error',
+      data: null
     });
   }
 };

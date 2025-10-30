@@ -11,8 +11,9 @@ class AuthController {
       
       if (error) {
         return res.status(400).json({
-          status: 400,
-          message: error.details[0].message
+          status: 102,
+          message: error.details[0].message,
+          data: null
         });
       }
       
@@ -22,8 +23,9 @@ class AuthController {
       const emailExists = await userRepository.emailExists(email);
       if (emailExists) {
         return res.status(400).json({
-          status: 400,
-          message: 'Email sudah terdaftar'
+          status: 102,
+          message: 'Email sudah terdaftar',
+          data: null
         });
       }
       
@@ -47,8 +49,9 @@ class AuthController {
       
       if (error.code === '23505') { // PostgreSQL unique violation
         return res.status(400).json({
-          status: 400,
-          message: 'Email sudah terdaftar'
+          status: 102,
+          message: 'Email sudah terdaftar',
+          data: null
         });
       }
       
@@ -67,8 +70,9 @@ class AuthController {
       
       if (error) {
         return res.status(400).json({
-          status: 400,
-          message: error.details[0].message
+          status: 102,
+          message: error.details[0].message,
+          data: null
         });
       }
       
@@ -79,8 +83,9 @@ class AuthController {
       
       if (!user) {
         return res.status(401).json({
-          status: 401,
-          message: 'Username atau password salah'
+          status: 103,
+          message: 'Username atau password salah',
+          data: null
         });
       }
       
@@ -89,8 +94,9 @@ class AuthController {
       
       if (!isPasswordValid) {
         return res.status(401).json({
-          status: 401,
-          message: 'Username atau password salah'
+          status: 103,
+          message: 'Username atau password salah',
+          data: null
         });
       }
       
@@ -99,7 +105,7 @@ class AuthController {
         { 
           sub: user.id,
           iat: Math.floor(Date.now() / 1000),
-          exp: Math.floor(Date.now() / 1000) + (30 * 60) // 30 minutes
+          exp: Math.floor(Date.now() / 1000) + (60 * 60) // 60 minutes
         },
         process.env.JWT_SECRET
       );
@@ -155,8 +161,9 @@ class AuthController {
       
       if (error) {
         return res.status(400).json({
-          status: 400,
-          message: error.details[0].message
+          status: 102,
+          message: error.details[0].message,
+          data: null
         });
       }
       
@@ -172,7 +179,8 @@ class AuthController {
       if (!updatedUser) {
         return res.status(404).json({
           status: 404,
-          message: 'User tidak ditemukan'
+          message: 'User tidak ditemukan',
+          data: null
         });
       }
       
@@ -198,6 +206,8 @@ class AuthController {
   
   // Update profile image endpoint
   async updateProfileImage(req, res) {
+    console.log('updateProfileImage', req);
+    console.log('updateProfileImage', req.body);
     try {
       // For now, we'll implement a simple base64 image handler
       // In production, you might want to use multer for file uploads
@@ -205,10 +215,12 @@ class AuthController {
       
       if (!profile_image) {
         return res.status(400).json({
-          status: 400,
-          message: 'Profile image is required'
+          status: 102,
+          message: 'Profile image tidak boleh kosong',
+          data: null
         });
       }
+      
       
       const userId = req.user.id;
       
@@ -218,7 +230,8 @@ class AuthController {
       if (!updatedUser) {
         return res.status(404).json({
           status: 404,
-          message: 'User tidak ditemukan'
+          message: 'User tidak ditemukan',
+          data: null
         });
       }
       
@@ -237,7 +250,8 @@ class AuthController {
       console.error('Update profile image error:', error);
       res.status(500).json({
         status: 500,
-        message: 'Internal server error'
+        message: 'Internal server error',
+        data: null
       });
     }
   }

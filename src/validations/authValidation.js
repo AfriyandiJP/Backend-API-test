@@ -6,33 +6,33 @@ const registrationSchema = Joi.object({
     .email()
     .required()
     .messages({
-      'string.email': 'Email format is invalid',
-      'any.required': 'Email is required'
+      'string.email': 'Parameter email tidak sesuai format',
+      'any.required': 'Email tidak boleh kosong'
     }),
   password: Joi.string()
     .min(8)
     .required()
     .messages({
-      'string.min': 'Password must be at least 8 characters',
-      'any.required': 'Password is required'
+      'string.min': 'password harus minimal 8 karakter',
+      'any.required': 'password tidak boleh kosong'
     }),
   first_name: Joi.string()
     .min(1)
     .max(100)
     .required()
     .messages({
-      'string.min': 'First name is required',
-      'string.max': 'First name must not exceed 100 characters',
-      'any.required': 'First name is required'
+      'string.min': 'first name tidak boleh kosong',
+      'string.max': 'first name tidak boleh melebihi 100 karakter',
+      'any.required': 'first name tidak boleh kosong'
     }),
   last_name: Joi.string()
     .min(1)
     .max(100)
     .required()
     .messages({
-      'string.min': 'Last name is required',
-      'string.max': 'Last name must not exceed 100 characters',
-      'any.required': 'Last name is required'
+      'string.min': 'last name tidak boleh kosong',
+      'string.max': 'last name tidak boleh melebihi 100 karakter',
+      'any.required': 'last name tidak boleh kosong'
     })
 });
 
@@ -42,13 +42,13 @@ const loginSchema = Joi.object({
     .email()
     .required()
     .messages({
-      'string.email': 'Email format is invalid',
-      'any.required': 'Email is required'
+      'string.email': 'parameter email tidak sesuai format',
+      'any.required': 'email tidak boleh kosong'
     }),
   password: Joi.string()
     .required()
     .messages({
-      'any.required': 'Password is required'
+      'any.required': 'password tidak boleh kosong'
     })
 });
 
@@ -57,18 +57,20 @@ const profileUpdateSchema = Joi.object({
   first_name: Joi.string()
     .min(1)
     .max(100)
-    .optional()
+    .required()
     .messages({
-      'string.min': 'First name cannot be empty',
-      'string.max': 'First name must not exceed 100 characters'
+      'string.min': 'first name tidak boleh kosong',
+      'string.max': 'first name tidak boleh melebihi 100 karakter',
+      'any.required': 'first name tidak boleh kosong'
     }),
   last_name: Joi.string()
     .min(1)
     .max(100)
-    .optional()
+    .required()
     .messages({
-      'string.min': 'Last name cannot be empty',
-      'string.max': 'Last name must not exceed 100 characters'
+      'string.min': 'last name tidak boleh kosong',
+      'string.max': 'last name tidak boleh melebihi 100 karakter',
+      'any.required': 'last name tidak boleh kosong'
     })
 });
 

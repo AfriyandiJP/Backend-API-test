@@ -12,6 +12,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Test database connection
 const pool = require('./src/config/db');
+(async () => {
+    try {
+      await pool.query('SELECT 1');
+      console.log('Database connection verified');
+    } catch (err) {
+      console.error('Database connection failed:', err.message);
+    }
+  })();
 
 // Routes
 app.get('/api/v1/health', (req, res) => {
@@ -45,7 +53,7 @@ app.use((err, req, res, next) => {
 });
 
 // 404 handler
-app.use('*', (req, res) => {
+app.use((req, res) => {
   res.status(404).json({
     status: 404,
     message: 'Endpoint not found'

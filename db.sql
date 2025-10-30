@@ -68,8 +68,8 @@ INSERT INTO services (service_code, service_name, service_icon, service_tariff, 
 ('PULSA_50K', 'Pulsa 50K', 'https://example.com/icons/pulsa-50k.png', 50000, 'PULSA'),
 ('PULSA_100K', 'Pulsa 100K', 'https://example.com/icons/pulsa-100k.png', 100000, 'PULSA'),
 ('VOUCHER_GAME_10K', 'Voucher Game 10K', 'https://example.com/icons/voucher-10k.png', 10000, 'VOUCHER_GAME'),
-('VOUCHER_GAME_25K', 'Voucher Game 25K', 'https://example.com/icons/voucher-25k.png', 25000, 'VOUCHER_GAME');
-('VOUCHER_GAME_50K', 'Voucher Game 50K', 'https://example.com/icons/voucher-50k.png', 50000, 'VOUCHER_GAME');
+('VOUCHER_GAME_25K', 'Voucher Game 25K', 'https://example.com/icons/voucher-25k.png', 25000, 'VOUCHER_GAME'),
+('VOUCHER_GAME_50K', 'Voucher Game 50K', 'https://example.com/icons/voucher-50k.png', 50000, 'VOUCHER_GAME'),
 ('VOUCHER_GAME_100K', 'Voucher Game 100K', 'https://example.com/icons/voucher-100k.png', 100000, 'VOUCHER_GAME');
 
 
